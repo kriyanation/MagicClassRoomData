@@ -64,7 +64,7 @@ class MagicLeaderBoard(tk.Frame):
         self.list_points = []
        # self.leaderboard.configure(state="normal")
         list_names = DataCapture.class_info()
-        rowindex = 2
+        rowindex = 0
         self.badge_image_medala = tk.PhotoImage(file= '../images/medala.png' )
         self.badge_image_medalb = tk.PhotoImage(file= '../images/medalb.png' )
         self.badge_image_medalc = tk.PhotoImage(file='../images/medalc.png')
@@ -84,20 +84,21 @@ class MagicLeaderBoard(tk.Frame):
             self.spinboxvalue.append(points)
             print("rowindex"+str(rowindex))
             self.datapointspinner = ttk.Spinbox(self.leaderboard,background='beige',foreground='brown',font=('TkDefaultFont', 12),
-                                                from_=0,to=100,textvariable=self.spinboxvalue[rowindex-2],wrap=True,width=2)
+                                                from_=0,to=100,textvariable=self.spinboxvalue[rowindex],wrap=True,width=2)
 
-            self.list_points.append((element[0],self.spinboxvalue[rowindex-2]))
+            self.list_points.append((element[0],self.spinboxvalue[rowindex]))
 
            # self.datapointslabel = ttk.Label(self.leaderboard, text=element[2], font=('TkDefaultFont', 12),
            #                                foreground='PeachPuff2',background='dark slate gray')
-            self.datanamelabel.grid(row=rowindex, column=0, padx=10, pady=3,sticky=tk.W)
-            self.databadgelabel.grid(row=rowindex, column=1, padx=10, pady=3)
-            self.datapointspinner.grid(row=rowindex, column=2, padx=10, pady=3)
+            self.datanamelabel.grid(row=rowindex+2, column=0, padx=10, pady=3,sticky=tk.W)
+            self.databadgelabel.grid(row=rowindex+2, column=1, padx=10, pady=3)
+            self.datapointspinner.grid(row=rowindex+2, column=2, padx=10, pady=3)
             rowindex += 1
            # self.leaderboard.configure(state="disabled")
 
     def save_data(self):
         DataCapture.save_leader_board_data(self.list_points)
+        self.refresh_data()
 
 
 

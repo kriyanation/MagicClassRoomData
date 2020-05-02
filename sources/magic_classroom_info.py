@@ -21,7 +21,7 @@ class MagicClassRoomData(tk.Frame):
         s.configure('classroom.TLabelframe.Label', font=('courier', 14, 'bold', 'italic'))
         s.configure('classroom.TLabelframe.Label', background='beige', foreground='brown')
 
-        s.configure('classroom.Label', background='beige', foreground='firebrick', font=('arial', 10, 'bold'))
+        s.configure('classroom.Label', background='beige', foreground='firebrick', font=('arial', 12, 'bold'))
         s.configure('classroom.TButton', background='firebrick', foreground='snow')
         s.map('classroom.TButton', background=[('pressed', 'snow'),('active', '!disabled', 'maroon')],
               foreground=[('pressed', 'firebrick'), ('active', 'snow')])
@@ -34,7 +34,7 @@ class MagicClassRoomData(tk.Frame):
         self.thought_frame = ttk.LabelFrame(self,text="Quote/Announcement",style="classroom.TLabelframe")
         self.thought_text_label = ttk.Label(self.thought_frame,text="Add a quote or an Announcement",style="classroom.Label")
         self.thought_text = ttk.Entry(self.thought_frame,width=80)
-        self.thought_button = ttk.Button(self.thought_frame, text="Submit", command=DataCapture.save_thought, style="classroom.TButton")
+        self.thought_button = ttk.Button(self.thought_frame, text="Submit", command=lambda: DataCapture.save_thought(self.thought_text.get()), style="classroom.TButton")
         self.display_thought_panel()
 
         self.leaderboard_frame = ttk.LabelFrame(self, text="Participating Students", style="classroom.TLabelframe")
@@ -43,22 +43,43 @@ class MagicClassRoomData(tk.Frame):
         self.badge_image_medalb = tk.PhotoImage(file='../images/medalb.png')
         self.levelone_threshold = ttk.Label(self.leaderboard_frame,text="Minimum points to reach level 1",image=self.badge_image_medala, style="classroom.Label")
         self.leveltwo_threshold = ttk.Label(self.leaderboard_frame, text="Minimum points to reach level 2",image=self.badge_image_medalb, style="classroom.Label")
+        self.min_lev1_var = tk.IntVar()
+        self.min_lev2_var = tk.IntVar()
+        a_threshold, b_threshold = DataCapture.get_threshold_values()
+        self.min_lev1_var.set(a_threshold)
+        self.min_lev2_var.set(b_threshold)
         self.levelonespinner = ttk.Spinbox(self.leaderboard_frame, background='beige', foreground='brown',
                                             font=('TkDefaultFont', 12),
-                                            from_=0, to=100, value=80, wrap=True,
+                                            from_=0, to=100, textvariable = self.min_lev1_var, wrap=True,
                                             width=2)
         self.leveltwospinner = ttk.Spinbox(self.leaderboard_frame, background='beige', foreground='brown',
                                            font=('TkDefaultFont', 12),
-                                           from_=0, to=100, value=50, wrap=True,
+                                           from_=0, to=100, textvariable=self.min_lev2_var, wrap=True,
                                            width=2)
+        self.points_button = ttk.Button(self.leaderboard_frame, text="Set Points", command=lambda: DataCapture.set_points(self.min_lev1_var.get(),self.min_lev2_var.get()),
+                                         style="classroom.TButton")
+
         self.add_delete_label = ttk.Label(self.leaderboard_frame, text="Enter Participants",
                                              style="classroom.Label")
         self.add_delete_text = tk.Text(self.leaderboard_frame,width = 20, height=20)
-        self.add_button = ttk.Button(self.leaderboard_frame, text="Add Participants", command="",
+        self.add_button = ttk.Button(self.leaderboard_frame, text="Add Participants", command=lambda: self.add_participants(self.add_delete_text.get("1.0",tk.END)),
                                          style="classroom.TButton")
-        self.remove_button = ttk.Button(self.leaderboard_frame, text="Remove Participants", command="",
+        self.remove_button = ttk.Button(self.leaderboard_frame, text="Remove Participants", command=lambda: self.remove_participants(self.add_delete_text.get("1.0",tk.END)),
                                          style="classroom.TButton")
 
+        self.display_student_panel()
+
+    def add_participants(self,participant_text):
+        DataCapture.add_participants(participant_text)
+        self.leaderboard_frame.grid_forget()
+        self.leaderboard.destroy()
+        self.leaderboard = FlashLeaderBoard.MagicLeaderBoard(self.leaderboard_frame)
+        self.display_student_panel()
+    def remove_participants(self,participant_text):
+        DataCapture.remove_participants(participant_text)
+        self.leaderboard_frame.grid_forget()
+        self.leaderboard.destroy()
+        self.leaderboard = FlashLeaderBoard.MagicLeaderBoard(self.leaderboard_frame)
         self.display_student_panel()
 
     def display_thought_panel(self):
@@ -76,12 +97,14 @@ class MagicClassRoomData(tk.Frame):
         self.levelonespinner.grid(row=0, column=2, padx=30)
         self.leveltwo_threshold.grid(row=0,column=3,padx=30)
         self.leveltwospinner.grid(row=0, column=4, padx=30)
+        self.points_button.grid(row=0, column=5, padx=10)
 
-        self.leaderboard.grid(row=1,column=0,columnspan=3,rowspan=2)
+
+        self.leaderboard.grid(row=1,column=0,columnspan=3,rowspan=3)
         self.add_delete_label.grid(row=1,column=3)
         self.add_delete_text.grid(row=1,column=4)
-        self.add_button.grid(row=2,column=3)
-        self.remove_button.grid(row=2,column=4)
+        self.add_button.grid(row=2,column=4)
+        self.remove_button.grid(row=2,column=5)
         self.leaderboard_frame.grid(row=1,column=0)
 
 
