@@ -7,11 +7,7 @@ import traceback
 
 TEST_ROW = 16
 
-config = configparser.RawConfigParser()
-two_up = Path(__file__).absolute().parents[2]
-print(str(two_up)+'/magic.cfg')
-config.read(str(two_up)+'/magic.cfg')
-file_root = config.get("section1",'file_root')
+file_root = os.path.abspath(os.path.join(os.getcwd(),".."))
 db = file_root+os.path.sep+"MagicRoom.db"
 
 

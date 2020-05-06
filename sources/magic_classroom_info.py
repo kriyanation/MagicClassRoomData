@@ -7,9 +7,7 @@ import configparser
 
 import FlashLeaderBoard, DataCapture
 
-config = configparser.RawConfigParser()
-two_up = Path(__file__).absolute().parents[2]
-print(str(two_up) + '/magic.cfg')
+
 
 class MagicClassRoomData(tk.Frame):
 
@@ -25,12 +23,7 @@ class MagicClassRoomData(tk.Frame):
         s.configure('classroom.TButton', background='firebrick', foreground='snow')
         s.map('classroom.TButton', background=[('pressed', 'snow'),('active', '!disabled', 'maroon')],
               foreground=[('pressed', 'firebrick'), ('active', 'snow')])
-        try:
-            config.read(str(two_up) + '/magic.cfg')
-            self.db = config.get("section1", "file_root") + os.path.sep + "MagicRoom.db"
-        except configparser.NoSectionError():
-            messagebox.showerror("Read Error", "Could not read the config file or the configuration script is incorrect")
-            sys.exit()
+
         self.thought_frame = ttk.LabelFrame(self,text="Quote/Announcement",style="classroom.TLabelframe")
         self.thought_text_label = ttk.Label(self.thought_frame,text="Add a quote or an Announcement",style="classroom.Label")
         self.thought_text = ttk.Entry(self.thought_frame,width=80)
