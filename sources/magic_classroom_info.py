@@ -107,7 +107,7 @@ class MagicClassRoomData(tk.Frame):
 if __name__ == "__main__":
     classroom_app = tk.Tk()
     classroom_app.title("Classroom Data")
-    classroom_app.geometry("800x500")
+    classroom_app.geometry("1000x700")
     frame = MagicClassRoomData(classroom_app)
     frame.configure(background='beige')
     classroom_app.columnconfigure(0,weight=1)
