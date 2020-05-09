@@ -142,7 +142,7 @@ def save_leader_board_data(list_points):
 def remove_participants(participants_text):
     if participants_text is None or participants_text.rstrip() == "":
         msg = messagebox.askyesno("Delete Check", "Do you want to delete all the participants?")
-        if msg == 'no':
+        if msg is False:
             return
         else:
             try:
@@ -153,7 +153,7 @@ def remove_participants(participants_text):
                 connection.commit()
                 connection.close()
             except (sqlite3.OperationalError):
-                messagebox.showerror("Database Error", "There was an error in saving your data, pleasecheck your logs")
+                messagebox.showerror("Database Error", "There was an error in saving your data, please check your logs")
     else:
         try:
             connection = sqlite3.connect(db)
