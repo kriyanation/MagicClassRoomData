@@ -10,7 +10,7 @@ file_root = os.path.abspath(os.path.join(os.getcwd(),".."))
 db = file_root+os.path.sep+"MagicRoom.db"
 
 
-def save_thought(thought_text):
+def save_thought(thought_text,self):
     try:
         connection = sqlite3.connect(db)
         cur = connection.cursor()
@@ -25,7 +25,7 @@ def save_thought(thought_text):
 
     else:
         messagebox.showinfo("Text Saved",
-                            "All your sessions will play the text in the first screen of the Player")
+                            "All your sessions will play the text in the first screen of the Player",parent=self)
 def get_threshold_values():
     try:
         connection = sqlite3.connect(db)
@@ -46,9 +46,9 @@ def get_threshold_values():
         messagebox.showerror("Database Error","There was an error in saving your data, pleasecheck your logs")
 
 
-def add_participants(participants_text):
+def add_participants(participants_text,self):
     if participants_text is None or participants_text.rstrip() == "":
-        messagebox.showinfo("Participants", "No Participants to add")
+        messagebox.showinfo("Participants", "No Participants to add",parent=self)
         return
     else:
         threshold_a, threshold_b = get_threshold_values()
@@ -66,11 +66,11 @@ def add_participants(participants_text):
                 list_index += 1
             connection.commit()
             connection.close()
-        except (sqlite3.OperationalError):
+        except (sqlite3.OperationalError, sqlite3.IntegrityError):
             traceback.print_exc()
-            messagebox.showerror("Database Error", "There was an error in saving your data, pleasecheck your logs")
+            messagebox.showerror("Database Error", "There was an error in saving your data, please check your logs and ensure there are no duplicates")
         else:
-            messagebox.showinfo("Added Participants", "Specified Participants were added")
+            messagebox.showinfo("Added Participants", "Specified Participants were added",parent=self)
 
 
 def class_info():
@@ -93,7 +93,7 @@ def class_info():
 
 
 
-def set_points(a_threshold, b_threshold):
+def set_points(a_threshold, b_threshold,self):
     try:
         connection = sqlite3.connect(db)
         cur = connection.cursor()
@@ -106,7 +106,7 @@ def set_points(a_threshold, b_threshold):
 
     else:
         messagebox.showinfo("Point Limits Saved",
-                        "The point limits have been saved")
+                        "The point limits have been saved",parent=self)
 
 def save_leader_board_data(list_points):
     connection = sqlite3.connect(db)
@@ -138,9 +138,9 @@ def save_leader_board_data(list_points):
     connection.close()
 
 
-def remove_participants(participants_text):
+def remove_participants(participants_text,self):
     if participants_text is None or participants_text.rstrip() == "":
-        msg = messagebox.askyesno("Delete Check", "Do you want to delete all the participants?")
+        msg = messagebox.askyesno("Delete Check", "Do you want to delete all the participants?",parent=self)
         if msg is False:
             return
         else:
@@ -171,4 +171,4 @@ def remove_participants(participants_text):
             traceback.print_exc()
             messagebox.showerror("Database Error", "There was an error in saving your data, please check your logs")
         else:
-            messagebox.showinfo("Participants Removed", "Specified Participants were removed")
+            messagebox.showinfo("Participants Removed", "Specified Participants were removed",parent=self)
