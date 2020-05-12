@@ -105,8 +105,8 @@ class MagicClassRoomData(tk.Toplevel):
         self.leaderboard.grid(row=1,column=0,columnspan=3,rowspan=3,pady=15)
         self.add_delete_label.grid(row=1,column=3)
         self.add_delete_text.grid(row=1,column=4)
-        self.add_button.grid(row=2,column=4)
-        self.remove_button.grid(row=2,column=5)
+        self.add_button.grid(row=2,column=4,pady=10)
+        self.remove_button.grid(row=2,column=5,pady=10)
         self.leaderboard_frame.grid(row=1,column=0,pady=20)
 
 

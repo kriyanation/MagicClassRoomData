@@ -17,8 +17,8 @@ class MagicLeaderBoard(tk.Frame):
         s.configure('Blue.TButton', background='firebrick', foreground='snow')
         s.map('Blue.TButton', background=[('active', '!disabled', 'peru'), ('pressed', 'firebrick')],
               foreground=[('pressed', 'snow'), ('active', 'snow')])
-        s.configure('TScrollbar', background='firebrick', foreground='beige')
-        s.map('TScrollbar', background=[('active', '!disabled', 'peru'), ('pressed', 'firebrick')],
+        s.configure('TScrollbar', background='brown', foreground='firebrick')
+        s.map('TScrollbar', background=[('active', '!disabled', 'firebrick'), ('pressed', 'firebrick')],
               foreground=[('pressed', 'snow'), ('active', 'snow')])
 
 
