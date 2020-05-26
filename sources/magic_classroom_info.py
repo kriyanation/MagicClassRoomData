@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import DataCaptureClass
 
-import FlashLeaderBoard
+import ClassLeaderBoard
 
 
 class MagicClassRoomData(tk.Toplevel):
@@ -36,7 +36,7 @@ class MagicClassRoomData(tk.Toplevel):
         self.display_thought_panel()
 
         self.leaderboard_frame = ttk.LabelFrame(self, text="Participating Students", style="classroom.TLabelframe")
-        self.leaderboard = FlashLeaderBoard.MagicLeaderBoard(self.leaderboard_frame)
+        self.leaderboard = ClassLeaderBoard.MagicLeaderBoard(self.leaderboard_frame)
         self.badge_image_medala = tk.PhotoImage(file='../images/medala.png')
         self.badge_image_medalb = tk.PhotoImage(file='../images/medalb.png')
         self.levelone_threshold = ttk.Label(self.leaderboard_frame,text="Minimum points to reach level 1",image=self.badge_image_medala, style="classroom.Label")
@@ -73,13 +73,13 @@ class MagicClassRoomData(tk.Toplevel):
         self.add_delete_text.delete(1.0,tk.END)
         self.leaderboard_frame.grid_forget()
         self.leaderboard.destroy()
-        self.leaderboard = FlashLeaderBoard.MagicLeaderBoard(self.leaderboard_frame)
+        self.leaderboard = ClassLeaderBoard.MagicLeaderBoard(self.leaderboard_frame)
         self.display_student_panel()
     def remove_participants(self,participant_text):
         DataCaptureClass.remove_participants(participant_text,self)
         self.leaderboard_frame.grid_forget()
         self.leaderboard.destroy()
-        self.leaderboard = FlashLeaderBoard.MagicLeaderBoard(self.leaderboard_frame)
+        self.leaderboard = ClassLeaderBoard.MagicLeaderBoard(self.leaderboard_frame)
         self.display_student_panel()
 
     def display_thought_panel(self):
