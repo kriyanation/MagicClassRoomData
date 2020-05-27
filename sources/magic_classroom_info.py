@@ -9,24 +9,24 @@ class MagicClassRoomData(tk.Toplevel):
 
     def __init__(self,parent,*args,**kwargs):
         super().__init__(parent,*args,**kwargs)
-        self.configure(background="beige")
+        self.configure(background="gray25")
         s = ttk.Style()
         s.theme_use('clam')
-        s.configure('classroom.TLabelframe', background='beige',borderwidth = 0)
-        s.configure('classroom.TLabelframe.Label', font=('courier', 14, 'bold', 'italic'))
-        s.configure('classroom.TLabelframe.Label', background='beige', foreground='brown')
+        s.configure('classroom.TLabelframe', background='gray25',borderwidth = 0)
+        s.configure('classroom.TLabelframe.Label', font=('helvetica', 14, 'bold'))
+        s.configure('classroom.TLabelframe.Label', background='gray25', foreground='snow')
 
-        s.configure('classroom.Label', background='beige', foreground='firebrick', font=('arial', 12, 'bold'))
-        s.configure('doc.Label', background='beige', foreground='dark blue', font=('arial', 10, 'bold'))
-        s.configure('classroom.TButton', background='firebrick', foreground='snow')
-        s.map('classroom.TButton', background=[('pressed', 'snow'),('active', '!disabled', 'maroon')],
-              foreground=[('pressed', 'firebrick'), ('active', 'snow')])
+        s.configure('classroom.Label', background='gray27', foreground='snow', font=('arial', 12, 'bold'))
+        s.configure('doc.Label', background='gray27', foreground='white', font=('arial', 10, 'bold'))
+        s.configure('classroom.TButton', background='steelblue', foreground='white')
+        s.map('classroom.TButton', background=[('pressed', 'steelblue'),('active', '!disabled', 'dark turquoise')],
+              foreground=[('pressed', 'white'), ('active', 'white')])
 
         self.thought_frame = ttk.LabelFrame(self,text="Quote/Announcement",style="classroom.TLabelframe")
         self.thought_text_label = ttk.Label(self.thought_frame,text="Add a quote or an Announcement",style="classroom.Label")
         self.thought_text = ttk.Entry(self.thought_frame,width=80)
         self.thought_button = ttk.Button(self.thought_frame, text="Submit", command=lambda: DataCaptureClass.save_thought(self.thought_text.get(),self), style="classroom.TButton")
-        self.doc_frame = tk.Frame(self, background="beige")
+        self.doc_frame = tk.Frame(self, background="gray25")
         self.doc_label = ttk.Label(self.doc_frame,
                                    text="Add your announcement or a quote which will be displayed at the beginning of all the lessons.\n\n"
                                         "Add participants name in each line to see them on the leaderboard.\n\nRemove individual participants by "
@@ -46,12 +46,12 @@ class MagicClassRoomData(tk.Toplevel):
         a_threshold, b_threshold = DataCaptureClass.get_threshold_values()
         self.min_lev1_var.set(a_threshold)
         self.min_lev2_var.set(b_threshold)
-        self.levelonespinner = ttk.Spinbox(self.leaderboard_frame, background='beige', foreground='brown',
-                                            font=('TkDefaultFont', 12),
+        self.levelonespinner = ttk.Spinbox(self.leaderboard_frame, background='gray25', foreground='royalblue4',
+                                            font=('helvetica', 12),
                                             from_=0, to=100, textvariable = self.min_lev1_var, wrap=True,
                                             width=2)
-        self.leveltwospinner = ttk.Spinbox(self.leaderboard_frame, background='beige', foreground='brown',
-                                           font=('TkDefaultFont', 12),
+        self.leveltwospinner = ttk.Spinbox(self.leaderboard_frame, background='gray25', foreground='royalblue4',
+                                           font=('helvetica', 12),
                                            from_=0, to=100, textvariable=self.min_lev2_var, wrap=True,
                                            width=2)
         self.points_button = ttk.Button(self.leaderboard_frame, text="Set Points", command=lambda: DataCaptureClass.set_points(self.min_lev1_var.get(),self.min_lev2_var.get(),self),
@@ -119,8 +119,8 @@ class MagicClassRoomData(tk.Toplevel):
 #     classroom_app.title("Classroom Data")
 #     classroom_app.geometry("1000x700")
 #     frame = MagicClassRoomData(classroom_app)
-#     frame.configure(background='beige')
+#     frame.configure(background='gray25')
 #     classroom_app.columnconfigure(0,weight=1)
-#     classroom_app.configure(background='beige')
+#     classroom_app.configure(background='gray25')
 #     frame.grid(row=0,column=0)
 #     classroom_app.mainloop()
